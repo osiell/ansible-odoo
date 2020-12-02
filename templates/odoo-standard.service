@@ -6,7 +6,7 @@ After=network.target
 Type=simple
 User={{ odoo_user }}
 WorkingDirectory={{ odoo_workdir }}
-{% if odoo_version | version_compare('10.0', '>=') %}
+{% if odoo_version is version_compare('10.0', '>=') %}
 ExecStart={{ odoo_rootdir }}/odoo-bin{{ odoo_logfile and ' --logfile %s' % odoo_logfile }} --config {{ odoo_config_file }}
 KillMode=mixed
 {% else %}
