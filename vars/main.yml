@@ -7,9 +7,9 @@ odoo_required_tools:
     - sudo
     - git
     - mercurial
-    - python-pip
-    - python-psycopg2
-    - python-setuptools
+    - "{{ 'python3-pip' if ansible_distribution_major_version > 10 else 'python-pip' }}"
+    - "{{ 'python3-psycopg2' if ansible_distribution_major_version > 10 else 'python-psycopg2' }}"
+    - "{{ 'python3-setuptools' if ansible_distribution_major_version > 10 else 'python-setuptools' }}"
     - xz-utils
 
 odoo_pypi_packages:
