@@ -103,7 +103,7 @@ odoo_pip_venv_cmd: "python3 -m virtualenv --python=python3 {{ odoo_pip_venv_path
 
 odoo_buildout_bootstrap_cmd: "{{ odoo_buildout_venv_path }}/bin/python {{ odoo_buildout_bootstrap_path }} -c {{ odoo_buildout_config_path }} --buildout-version {{ odoo_buildout_version }} --setuptools-version {{ odoo_setuptools_version }}"
 
-odoo_wkhtmltox_version: 0.12.5
+odoo_wkhtmltox_version: 0.12.6
 
 odoo_wkhtmltox_depends:
     - fontconfig
