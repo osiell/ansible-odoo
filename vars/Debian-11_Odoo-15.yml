@@ -105,6 +105,9 @@ odoo_buildout_bootstrap_cmd: "{{ odoo_buildout_venv_path }}/bin/python {{ odoo_b
 
 odoo_wkhtmltox_version: 0.12.6
 
+odoo_wkhtmltox_urls:
+    - http://ftp.fr.debian.org/debian/pool/main/w/wkhtmltopdf/wkhtmltopdf_{{ odoo_wkhtmltox_version }}-1_{{ odoo_debian_arch }}.deb
+
 odoo_wkhtmltox_depends:
     - fontconfig
     - libfontconfig1
