@@ -81,6 +81,7 @@ odoo_pip_build_dependencies:
     - libwebp-dev
     - libssl-dev
     - cargo
+    - rustc
     - pkg-config
 
 odoo_buildout_build_dependencies:
