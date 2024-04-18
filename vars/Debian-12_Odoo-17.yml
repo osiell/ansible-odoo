@@ -68,9 +68,6 @@ odoo_npm_packages:
       version: 4.1.3
     - name: less-plugin-clean-css
       version: 1.5.1
-# We never use phantomjs ...
-#    - name: phantomjs-prebuilt
-#      version: 2.1.1
 
 odoo_pip_dependencies:
     - wrapt
@@ -115,15 +112,7 @@ odoo_buildout_build_dependencies:
     - libffi-dev
     - rustc
 
-odoo_setuptools_version: 41.6.0
-odoo_buildout_venv_cmd: "python3 -m virtualenv --setuptools {{ odoo_setuptools_version }} --python=python3 {{ odoo_buildout_venv_path }}"
-odoo_pip_venv_cmd: "python3 -m virtualenv --python=python3 {{ odoo_pip_venv_path }}"
-
-odoo_buildout_version: 3.0.1
-odoo_buildout_bootstrap_cmd: "{{ odoo_buildout_venv_path }}/bin/python {{ odoo_buildout_bootstrap_path }} -c {{ odoo_buildout_config_path }} --buildout-version {{ odoo_buildout_version }} --setuptools-version {{ odoo_setuptools_version }} --allow-site-packages"
-
 odoo_wkhtmltox_version: 0.12.6
-
 odoo_wkhtmltox_urls:
     - https://github.com/wkhtmltopdf/packaging/releases/download/{{ odoo_wkhtmltox_version }}.1-3/wkhtmltox_{{ odoo_wkhtmltox_version }}.1-3.bookworm_{{ odoo_debian_arch }}.deb
 

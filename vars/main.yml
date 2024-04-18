@@ -15,8 +15,7 @@ odoo_required_tools:
 odoo_pypi_packages:
     - psycogreen
 
-odoo_buildout_venv_cmd: "virtualenv --no-setuptools {{ odoo_buildout_venv_path }}"
-odoo_pip_venv_cmd: "virtualenv {{ odoo_pip_venv_path }}"
+odoo_repo_rev: "{{ odoo_version if not odoo_environment else (odoo_environment == 'prod' and 'default' or 'develop') }}"
 
 odoo_wkhtmltox_version: 0.12.5
 
