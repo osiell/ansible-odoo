@@ -33,6 +33,7 @@ odoo_wkhtmltox_dest: "/opt/wkhtmltox-{{ odoo_wkhtmltox_version }}_linux-{{ ansib
 odoo_nodejs_apt_package: "nodejs=0.10*"
 odoo_nodejs_apt_repo: "node_0.10"
 odoo_nodejs_apt_dist: "{{ ansible_distribution_release }}"
+odoo_nodejs_install_method_version: 0
 odoo_nodejs_apt_repositories:
     - repo: "deb http://deb.nodesource.com/{{ odoo_nodejs_apt_repo }} {{ odoo_nodejs_apt_dist }} main"
       state: present

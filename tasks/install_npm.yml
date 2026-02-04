@@ -5,12 +5,70 @@
     url: "{{ item.url }}"
     state: "{{ item.state }}"
   with_items: "{{ odoo_nodejs_apt_keys | default([]) }}"
+  when: odoo_nodejs_install_method_version == 0
 
 - name: Configure NodeJS APT repository
   apt_repository:
     repo: "{{ item.repo }}"
     state: "{{ item.state }}"
   with_items: "{{ odoo_nodejs_apt_repositories | default([]) }}"
+  when: odoo_nodejs_install_method_version == 0
+
+- name: Uninstall existing Node.js and clean dependencies
+  ansible.builtin.apt:
+    name: nodejs
+    state: absent
+    autoremove: yes
+  register: node_uninstall
+  changed_when: node_uninstall.changed
+  when: odoo_nodejs_install_method_version == 1
+
+- name: Remove old NodeSource files (if exist)
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /usr/share/keyrings/nodesource.gpg
+    - /etc/apt/sources.list.d/nodesource.list
+    - /etc/apt/preferences.d/nodejs
+  when: odoo_nodejs_install_method_version == 1
+
+- name: Download NodeSource GPG key
+  ansible.builtin.get_url:
+    url: https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key
+    dest: /tmp/nodesource-repo.gpg
+    mode: "0644"
+  when: odoo_nodejs_install_method_version == 1
+
+- name: Convert GPG key to binary format and store in keyrings
+  ansible.builtin.command:
+    cmd: gpg --dearmor -o /usr/share/keyrings/nodesource.gpg /tmp/nodesource-repo.gpg
+    creates: /usr/share/keyrings/nodesource.gpg
+  become: yes
+  when: odoo_nodejs_install_method_version == 1
+
+- name: Set correct permissions for the GPG key
+  ansible.builtin.file:
+    path: /usr/share/keyrings/nodesource.gpg
+    mode: "0644"
+  when: odoo_nodejs_install_method_version == 1
+
+- name: Detect system architecture
+  ansible.builtin.command: dpkg --print-architecture
+  register: system_arch
+  changed_when: false
+  when: odoo_nodejs_install_method_version == 1
+
+- name: Configure NodeJS APT repository
+  apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/nodesource.gpg] https://deb.nodesource.com/{{ odoo_nodejs_apt_repo }} nodistro main"
+    state: present
+  when: odoo_nodejs_install_method_version == 1
+
+- name: Update APT cache
+  ansible.builtin.apt:
+    update_cache: yes
+  when: odoo_nodejs_install_method_version == 1
 
 - name: Install NodeJS
   apt:  pkg="{{ odoo_nodejs_apt_package }}"
